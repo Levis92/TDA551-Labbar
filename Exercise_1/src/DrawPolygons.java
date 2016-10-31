@@ -5,12 +5,16 @@ import java.util.*;
 public class DrawPolygons extends Component{
     private ArrayList<Polygons> polygonNames;
     private ArrayList<Point>  centerPoints;
-    private enum Polygons{TRIANGLE, SQUARE, RECTANGLE};
+    private enum Polygons{
+        TRIANGLE,
+        SQUARE,
+        RECTANGLE
+    }//Polygons
 
     public DrawPolygons(Polygons[] p, Point[] center) {
 
     if (p.length != center.length) {
-        throw RuntimeException("Incorrect input");
+        throw new RuntimeException("Incorrect input");
     }
 
     polygonNames = new ArrayList<>(p.length);
@@ -24,33 +28,33 @@ public class DrawPolygons extends Component{
 
     private void drawSquare(Point currentCenter, Graphics g) {
         g.drawRect(currentCenter.x -10, currentCenter.y -10, 20, 20);
-    }
+    }//drawSquare
 
     private void drawTriangle(Point currentCenter, Graphics g) {
         g.drawLine(currentCenter.x, currentCenter.y-10, currentCenter.x-10, currentCenter.y+10);
         g.drawLine(currentCenter.x-10, currentCenter.y+10,
                 currentCenter.x+10, currentCenter.y+10);
         g.drawLine(currentCenter.x+10, currentCenter.y+10, currentCenter.x, currentCenter.y-10);
-    }
+    }//drawTriangle
 
     private void drawRectangle(Point currentCenter, Graphics g) {
         g.drawRect(currentCenter.x -20, currentCenter.y -10, 40, 20);
-    }
+    }//drawRectangle
 
     @Override
     public void paint(Graphics g) {
         for (int i = 0; i < polygonNames.size(); i++) {
-            String currentPolygon = polygonNames.get(i);
+            Polygons currentPolygon = polygonNames.get(i);
             Point currentCenter = centerPoints.get(i);
 
             switch (currentPolygon) {
-                case Polygons.SQUARE:
+                case SQUARE:
                     drawSquare(currentCenter, g);
                     break;
-                case Polygons.TRIANGLE:
+                case TRIANGLE:
                     drawTriangle(currentCenter, g);
                     break;
-                case Polygons.RECTANGLE:
+                case RECTANGLE:
                     drawRectangle(currentCenter, g);
                     break;
                 default:
@@ -62,7 +66,7 @@ public class DrawPolygons extends Component{
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         Polygons[] p = {Polygons.SQUARE, Polygons.TRIANGLE, Polygons.TRIANGLE, Polygons.RECTANGLE};
-        Point[] points = {new Point(100,300), new Point(50,200), new Point(150,250), new Point(100,230)};
+        Point[] points = {new Point(100,20), new Point(50,200), new Point(150,50), new Point(170,230)};
         DrawPolygons polygons = new DrawPolygons(p, points);
 
 

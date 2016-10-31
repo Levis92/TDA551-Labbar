@@ -1,0 +1,29 @@
+|| Frågor att besvara ||
+
+Vad är skillnaden på GoldModel och GameModel, och hur är de relaterade till varandra?
+
+Vilken metod utför själva ritandet av ‘Gold coins’ i spelet ‘Gold game’?
+
+Vilken metod är det som anropar metoden som ritar ut ‘Gold coins’?
+
+Vad är syftet med GameFactory och hur kan GameFactory utvidgas för att få med ‘Snake game’?
+(Endast ett kort svar behövs.)
+
+Var återfinns beräkningen och kontrollen av de rörelser som ‘Gold eaters’ gör?
+
+Hur lagras ett spelbräde och i vilken klass?
+Beskriv arbetsflödet av programmet. Detta kan göras genom att skissa på hur kontrollen flödar genom olika klasser och metoder.
+
+Ge en plan för hur ni tänker fortsätta med deluppgift 2. Vilka klasser kommer ni att skriva och vad kan ni återanvända?
+
+
+
+|| Ledtrådar ||
+
+- Main.java är huvudklassen.
+
+- XxxView.java visar en grafisk presentation av spelets händelseförlopp.
+
+- XxxModel.java definierar spelets logik och och tar hand om utseende och känsla.
+
+- GameController.java tar hand om indata, uppdateringar etc.

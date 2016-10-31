@@ -13,9 +13,7 @@ public class DrawPolygons extends Component{
 
     public DrawPolygons(Polygons[] p, Point[] center) {
 
-    if (p.length != center.length) {
-        throw new RuntimeException("Incorrect input");
-    }
+    if (p.length != center.length) throw new UnsupportedOperationException("Incorrect input");
 
     polygonNames = new ArrayList<>(p.length);
     centerPoints = new ArrayList<>(center.length);

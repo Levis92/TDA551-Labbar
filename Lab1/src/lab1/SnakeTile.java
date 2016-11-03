@@ -3,7 +3,7 @@ package lab1;
 import java.awt.*;
 
 /**
- * A round tile manages painting of a circle
+ * A round tile manages painting of a recctangle
  * in a specified area of the screen.
  * 
  * Whenever the object should paint itself,

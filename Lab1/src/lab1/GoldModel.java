@@ -46,7 +46,7 @@ public class GoldModel extends GameModel {
 	/*
 	 * The following GameTile objects are used only
 	 * to describe how to paint the specified item.
-	 * 
+	 *
 	 * This means that they should only be used in
 	 * conjunction with the get/setGameboardState()
 	 * methods.
@@ -116,7 +116,7 @@ public class GoldModel extends GameModel {
 		// Loop until a blank position is found and ...
 		do {
 			newCoinPos = new Position((int) (Math.random() * size.width),
-										(int) (Math.random() * size.height));
+					(int) (Math.random() * size.height));
 		} while (!isPositionEmpty(newCoinPos));
 
 		// ... add a new coin to the empty tile.
@@ -126,7 +126,7 @@ public class GoldModel extends GameModel {
 
 	/**
 	 * Return whether the specified position is empty.
-	 * 
+	 *
 	 * @param pos
 	 *            The position to test.
 	 * @return true if position is empty.
@@ -171,7 +171,7 @@ public class GoldModel extends GameModel {
 	/**
 	 * This method is called repeatedly so that the
 	 * game can update its state.
-	 * 
+	 *
 	 * @param lastKey
 	 *            The most recent keystroke.
 	 */
@@ -211,7 +211,7 @@ public class GoldModel extends GameModel {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pos The position to test.
 	 * @return <code>false</code> if the position is outside the playing field, <code>true</code> otherwise.
 	 */

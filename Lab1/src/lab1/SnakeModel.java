@@ -35,7 +35,7 @@ public class SnakeModel extends GameModel {
 		}
 	}
 
-	//number of coins on the board
+	/** The number of coins on the board */
 	private static final int COIN_START_AMOUNT = 30;
 
 	/*
@@ -57,7 +57,7 @@ public class SnakeModel extends GameModel {
 			Color.RED, 2.0);
 
 	/** Graphical representation of the body */
-	private static final GameTile BODY_TILE = new SnakeTile(Color.BLACK,
+	private static final GameTile BODY_TILE = new RectangularTile(Color.BLACK,
 			Color.GREEN, 2.0);
 
 	/** Graphical representation of a blank tile. */
@@ -170,7 +170,9 @@ public class SnakeModel extends GameModel {
 		}
 	}
 
-	//Move all parts of the snake one step forward
+	/**
+	 * Move all parts of the snake one step forward
+	 */
 	private void updateCollectorPos() {
 		for (int i = collectorPos.size() - 1; i > 0; i--) {
 			collectorPos.set(i, collectorPos.get(i-1));
@@ -186,10 +188,32 @@ public class SnakeModel extends GameModel {
 				this.collectorPos.get(0).getY() + this.direction.getYDelta());
 	}
 
-	//Increase the length of the snake by 1
+	/**
+	 * Increase the length of the snake by 1
+	 */
 	private void incSnakeLength() {
 		collectorPos.add(eatQueue.poll());
 	}
+
+	//Checks all game-over criteria
+	private boolean checkGameOver() {
+        //Check if all coins are found
+	    if (this.coins.isEmpty()) {
+            this.score = this.score + 5;
+            return true;
+        }
+        //Check if snake hits wall
+        else if (isOutOfBounds(this.collectorPos.get(0))) {
+            return true;
+        }
+        //Check if snake collides with itself
+        for (int i = 1; i < collectorPos.size(); i++) {
+            if (collectorPos.get(0).equals(collectorPos.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	/**
 	 * This method is called repeatedly so that the
@@ -217,17 +241,11 @@ public class SnakeModel extends GameModel {
 		// Change collector position.
 		updateCollectorPos();
 
-		//Check if snake hits wall
-		if (isOutOfBounds(this.collectorPos.get(0))) {
+		//Check if game over
+		if (checkGameOver()) {
 			throw new GameOverException(this.score);
 		}
 
-		//Check if snake collides with itself
-		for (int i = 1; i < collectorPos.size(); i++) {
-			if (collectorPos.get(0).equals(collectorPos.get(i))) {
-				throw new GameOverException(this.score);
-			}
-		}
 		// Draw collector at new position.
 		setGameboardState(this.collectorPos.get(0), HEAD_TILE);
 
@@ -240,11 +258,6 @@ public class SnakeModel extends GameModel {
 		if (this.coins.remove(this.collectorPos.get(0))) {
 			this.score++;
 			eatQueue.add(collectorPos.get(0));
-		}
-
-		// Check if all coins are found
-		if (this.coins.isEmpty()) {
-			throw new GameOverException(this.score + 5);
 		}
 
 	}

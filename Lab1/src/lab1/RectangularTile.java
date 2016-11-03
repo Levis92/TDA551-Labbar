@@ -1,8 +1,6 @@
 package lab1;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 
 
 /**
@@ -16,21 +14,71 @@ import java.awt.Graphics;
 public class RectangularTile extends GameTile {
 
 	/** The color of the rectangle */
-	private final Color color;
+	private final Color strokeColor;
+	private final Color fillColor;
+	private final Stroke stroke;
+	private final double scale;
 
 	/**
 	 * Creates a rectangular game tile.
-	 * 
-	 * @param color
-	 *            the color of the rectangle.
+	 *
+	 * @param fillColor
+	 *            the color of the interior of the circle.
 	 */
-	public RectangularTile(final Color color) {
-		this.color = color;
+	public RectangularTile(final Color fillColor) {
+		this(fillColor, fillColor);
+	}
+
+	/**
+	 * Creates a rectangular game tile with a stroke around it.
+	 *
+	 * @param strokeColor
+	 *            the color of the stroke around the rectangle.
+	 * @param fillColor
+	 *            the color of the interior of the rectangle.
+	 */
+	public RectangularTile(final Color strokeColor, final Color fillColor) {
+		this(strokeColor, fillColor, 1.0);
+	}
+
+	/**
+	 * Creates a rectangular game tile with a stroke around it.
+	 *
+	 * @param strokeColor
+	 *            the color of the stroke around the rectangle.
+	 * @param fillColor
+	 *            the color of the interior of the rectangle.
+	 * @param thickness
+	 *            the thickness of the stroke.
+	 */
+	public RectangularTile(final Color strokeColor, final Color fillColor,
+						 final double thickness) {
+		this(strokeColor, fillColor, thickness, 1.0);
+	}
+
+	/**
+	 * Creates a rectangular game tile with a stroke around it.
+	 *
+	 * @param strokeColor
+	 *            the color of the stroke around the rectangle.
+	 * @param fillColor
+	 *            the color of the interior of the rectangle.
+	 * @param thickness
+	 *            the thickness of the stroke.
+	 * @param scale
+	 *            size of the rectangle relative to the tile size.
+	 */
+	public RectangularTile(final Color strokeColor, final Color fillColor,
+						 final double thickness, final double scale) {
+		this.strokeColor = strokeColor;
+		this.fillColor = fillColor;
+		this.stroke = new BasicStroke((float) thickness);
+		this.scale = scale;
 	}
 
 	/**
 	 * Draws itself in a given graphics context, position and size.
-	 * 
+	 *
 	 * @param g
 	 *            graphics context to draw on.
 	 * @param x
@@ -41,9 +89,19 @@ public class RectangularTile extends GameTile {
 	 *            size of this object in pixels.
 	 */
 	@Override
-	public void draw(final Graphics g, final int x, final int y,
-			final Dimension d) {
-		g.setColor(this.color);
-		g.fillRect(x, y, d.width, d.height);
+	public void draw(final Graphics g, final int x, final int y, final Dimension d) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(this.fillColor);
+		double xOffset = (d.width * (1.0 - this.scale)) / 2.0;
+		double yOffset = (d.height * (1.0 - this.scale)) / 2.0;
+		g2.fillRect((int) (x + xOffset), (int) (y + yOffset),
+				(int) (d.width - xOffset * 2),
+				(int) (d.height - yOffset * 2));
+		g2.setStroke(this.stroke);
+		g2.setColor(this.strokeColor);
+		g2.drawRect((int) (x + xOffset), (int) (y + yOffset),
+				(int) (d.width - xOffset * 2),
+				(int) (d.height - yOffset * 2));
 	}
 }
+

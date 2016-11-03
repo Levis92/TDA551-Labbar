@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * The controller class of the framework. Listens to user keystrokes and
  * passes them on to the current game.
- * </ul>
+ *
  */
 public class GameController implements Runnable {
 

@@ -8,14 +8,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Sample game for illustration. Intentionally stupid; more interesting
- * games to be provided by students.
- * <p>
- * Initially 20 gold coins are randomly placed in the matrix. The red gold
- * collector aims to collect these coins which disappear after collection. Each
- * coin is randomly moved to a new position every n moves, where n is the number
- * of remaining coins. The game is won when all coins are collected and lost when
- * collector leaves game board.
+ * Simple snake game
  */
 public class SnakeModel extends GameModel {
 	public enum Directions {
@@ -42,7 +35,8 @@ public class SnakeModel extends GameModel {
 		}
 	}
 
-	private static final int COIN_START_AMOUNT = 20;
+	//number of coins on the board
+	private static final int COIN_START_AMOUNT = 30;
 
 	/*
 	 * The following GameTile objects are used only
@@ -58,11 +52,12 @@ public class SnakeModel extends GameModel {
 			0),
 			new Color(255, 255, 0), 2.0);
 
-	/** Graphical representation of the collector */
+	/** Graphical representation of the head */
 	private static final GameTile HEAD_TILE = new RoundTile(Color.BLACK,
 			Color.RED, 2.0);
 
-	private static final GameTile BODY_TILE = new RoundTile(Color.BLACK,
+	/** Graphical representation of the body */
+	private static final GameTile BODY_TILE = new SnakeTile(Color.BLACK,
 			Color.GREEN, 2.0);
 
 	/** Graphical representation of a blank tile. */
@@ -175,7 +170,7 @@ public class SnakeModel extends GameModel {
 		}
 	}
 
-
+	//Move all parts of the snake one step forward
 	private void updateCollectorPos() {
 		for (int i = collectorPos.size() - 1; i > 0; i--) {
 			collectorPos.set(i, collectorPos.get(i-1));
@@ -191,6 +186,7 @@ public class SnakeModel extends GameModel {
 				this.collectorPos.get(0).getY() + this.direction.getYDelta());
 	}
 
+	//Increase the length of the snake by 1
 	private void incSnakeLength() {
 		collectorPos.add(eatQueue.poll());
 	}
@@ -221,10 +217,12 @@ public class SnakeModel extends GameModel {
 		// Change collector position.
 		updateCollectorPos();
 
+		//Check if snake hits wall
 		if (isOutOfBounds(this.collectorPos.get(0))) {
 			throw new GameOverException(this.score);
 		}
 
+		//Check if snake collides with itself
 		for (int i = 1; i < collectorPos.size(); i++) {
 			if (collectorPos.get(0).equals(collectorPos.get(i))) {
 				throw new GameOverException(this.score);
@@ -233,6 +231,7 @@ public class SnakeModel extends GameModel {
 		// Draw collector at new position.
 		setGameboardState(this.collectorPos.get(0), HEAD_TILE);
 
+		// Change previous head tile to body tile
 		if (collectorPos.size() > 1) {
 			setGameboardState(this.collectorPos.get(1), BODY_TILE);
 		}
@@ -247,14 +246,6 @@ public class SnakeModel extends GameModel {
 		if (this.coins.isEmpty()) {
 			throw new GameOverException(this.score + 5);
 		}
-
-		// Remove one of the coins
-		Position oldCoinPos = this.coins.get(0);
-		this.coins.remove(0);
-		setGameboardState(oldCoinPos, BLANK_TILE);
-
-		// Add a new coin (simulating moving one coin)
-		addCoin();
 
 	}
 

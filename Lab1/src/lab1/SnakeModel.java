@@ -11,29 +11,6 @@ import java.util.Queue;
  * Simple snake game
  */
 public class SnakeModel extends GameModel {
-	public enum Directions {
-		EAST(1, 0),
-		WEST(-1, 0),
-		NORTH(0, -1),
-		SOUTH(0, 1),
-		NONE(0, 0);
-
-		private final int xDelta;
-		private final int yDelta;
-
-		Directions(final int xDelta, final int yDelta) {
-			this.xDelta = xDelta;
-			this.yDelta = yDelta;
-		}
-
-		public int getXDelta() {
-			return this.xDelta;
-		}
-
-		public int getYDelta() {
-			return this.yDelta;
-		}
-	}
 
 	/** The number of coins on the board */
 	private static final int COIN_START_AMOUNT = 30;
@@ -260,16 +237,6 @@ public class SnakeModel extends GameModel {
 			eatQueue.add(collectorPos.get(0));
 		}
 
-	}
-
-	/**
-	 * 
-	 * @param pos The position to test.
-	 * @return <code>false</code> if the position is outside the playing field, <code>true</code> otherwise.
-	 */
-	private boolean isOutOfBounds(Position pos) {
-		return pos.getX() < 0 || pos.getX() >= getGameboardSize().width
-				|| pos.getY() < 0 || pos.getY() >= getGameboardSize().height;
 	}
 
 }

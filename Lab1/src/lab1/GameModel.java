@@ -10,6 +10,30 @@ import java.awt.Dimension;
  */
 public abstract class GameModel {
 
+	public enum Directions {
+		EAST(1, 0),
+		WEST(-1, 0),
+		NORTH(0, -1),
+		SOUTH(0, 1),
+		NONE(0, 0);
+
+		private final int xDelta;
+		private final int yDelta;
+
+		Directions(final int xDelta, final int yDelta) {
+			this.xDelta = xDelta;
+			this.yDelta = yDelta;
+		}
+
+		public int getXDelta() {
+			return this.xDelta;
+		}
+
+		public int getYDelta() {
+			return this.yDelta;
+		}
+	}
+
 	/** A Matrix containing the state of the gameboard. */
 	private final GameTile[][] gameboardState;
 
@@ -88,4 +112,15 @@ public abstract class GameModel {
 	 *            The most recent keystroke.
 	 */
 	public abstract void gameUpdate(int lastKey) throws GameOverException;
+
+	/**
+	 *
+	 * @param pos The position to test.
+	 * @return <code>false</code> if the position is outside the playing field, <code>true</code> otherwise.
+	 */
+	protected boolean isOutOfBounds(Position pos) {
+		return pos.getX() < 0 || pos.getX() >= getGameboardSize().width
+				|| pos.getY() < 0 || pos.getY() >= getGameboardSize().height;
+	}
+
 }

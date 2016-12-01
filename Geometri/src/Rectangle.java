@@ -6,27 +6,31 @@ import java.awt.*;
  */
 public class Rectangle extends Shape{
 
+    /**
+     * construct a rectangle
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param c
+     * @throws IllegalPositionException
+     */
     public Rectangle(int x, int y, int width, int height, Color c) throws IllegalPositionException {
-        this.x = x;
-        this.y = y;
-        this.color = c;
-        this.width = width;
-        this.height = height;
+        super(x, y, width, height, c);
         if (checkIllegal()) {
             throw new IllegalPositionException();
         }
-        calcArea();
-        calcCircumference();
     }
 
+    /**
+     * construct a Rectangle using a GeometricalForm
+     * @param f
+     * @param width
+     * @param height
+     * @param c
+     */
     public Rectangle(GeometricalForm f, int width, int height, Color c) {
-        this.x = f.getX();
-        this.y = f.getY();
-        this.color = c;
-        this.width = width;
-        this.height = height;
-        calcArea();
-        calcCircumference();
+        super(f.getX(), f.getY(), width, height, c);
     }
 
     /** {@inheritDoc} */

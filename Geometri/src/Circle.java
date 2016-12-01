@@ -7,27 +7,29 @@ import java.lang.Math.*;
 
 public class Circle extends Shape {
 
+    /**
+     * constructs a Circle
+     * @param x
+     * @param y
+     * @param diameter
+     * @param c
+     * @throws IllegalPositionException
+     */
     public Circle(int x, int y, int diameter, Color c) throws IllegalPositionException {
-        this.x = x;
-        this.y = y;
-        this.color = c;
-        width = diameter / 2;
-        height = diameter / 2;
+        super(x, y, diameter/2, diameter/2, c);
         if (checkIllegal()) {
             throw new IllegalPositionException();
         }
-        calcArea();
-        calcCircumference();
     }
 
+    /**
+     * constructs a Circle using a GeometricalForm
+     * @param f
+     * @param diameter
+     * @param c
+     */
     public Circle(GeometricalForm f, int diameter, Color c) {
-        this.x = f.getX();
-        this.y = f.getY();
-        this.color = c;
-        width = diameter / 2;
-        height = diameter / 2;
-        calcArea();
-        calcCircumference();
+        super(f.getX(), f.getY(), diameter/2, diameter/2, c);
     }
 
     /** {@inheritDoc} */

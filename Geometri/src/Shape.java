@@ -39,6 +39,24 @@ public abstract class Shape implements GeometricalForm{
     /** draw the shape */
     public abstract void fill(Graphics g);
 
+    /**
+     * constructs a shape
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param c
+     */
+    public Shape(int x, int y, int width, int height, Color c){
+        this.x = x;
+        this.y = y;
+        this.color = c;
+        this.width = width;
+        this.height = height;
+        calcArea();
+        calcCircumference();
+    }
+
     /** compare the shape to another geometrical form using area and circumference
      * @param d
      * @return
@@ -124,7 +142,7 @@ public abstract class Shape implements GeometricalForm{
      */
     @Override
     public int hashCode() {
-        return area+circumference*37+color.hashCode()+width*370+height*3700;
+        return ((((area*3+circumference)*37+color.hashCode())*7+width)*53+height)*97;
     }
 
     /** returns height of shape */

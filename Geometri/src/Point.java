@@ -5,27 +5,27 @@ import java.awt.*;
 
 public class Point extends Shape {
 
+    /**
+     * construct a Point
+     * @param x
+     * @param y
+     * @param c
+     * @throws IllegalPositionException
+     */
     public Point(int x, int y, Color c) throws IllegalPositionException {
-        this.x = x;
-        this.y = y;
-        this.color = c;
-        width = 0;
-        height = 0;
+        super(x, y, 0, 0, c);
         if (checkIllegal()) {
             throw new IllegalPositionException();
         }
-        calcArea();
-        calcCircumference();
     }
 
+    /**
+     * construct a Point using a GeometricalForm
+     * @param f
+     * @param c
+     */
     public Point(GeometricalForm f, Color c) {
-        this.x = f.getX();
-        this.y = f.getY();
-        this.color = c;
-        width = 0;
-        height = 0;
-        calcArea();
-        calcCircumference();
+        super(f.getX(), f.getY(), 0, 0, c);
     }
 
     /** {@inheritDoc} */

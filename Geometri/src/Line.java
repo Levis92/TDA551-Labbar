@@ -5,30 +5,35 @@ import java.awt.*;
  * class for lines
  */
 public class Line extends Shape {
-    //private int x1;
-    //private int y1;
-    //private int x2;
-    //private int y2;
     private boolean up;
 
+    /**
+     * creates a Line
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param c
+     * @throws IllegalPositionException
+     */
     public Line(int x1, int y1, int x2, int y2, Color c) throws IllegalPositionException {
-        if(y1<y2){
-            up=false;
-        }else{
-            up=true;
+        super(selectMin(x1, x2), selectMin(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2), c);
+        if (y1 < y2) {
+            up = false;
+        } else {
+            up = true;
         }
-        this.color = c;
-        this.x = setX(x1,x2);
-        this.y = setY(y1,y2);
-        width = Math.abs(x1 - x2);
-        height = Math.abs(y1 - y2);
         if (checkIllegal() || x2 < 0 || y2 < 0) {
             throw new IllegalPositionException();
         }
-        calcArea();
-        calcCircumference();
     }
 
+    /**
+     * Creates a Line using a GeometricalForm
+     * @param f1
+     * @param f2
+     * @param c
+     */
     public Line(GeometricalForm f1, GeometricalForm f2, Color c) throws IllegalPositionException {
         this(f1.getX(), f1.getY(), f2.getX(), f2.getY(), c);
     }
@@ -43,18 +48,11 @@ public class Line extends Shape {
         circumference = (int) Math.round(Math.sqrt(height * height + width * width));
     }
 
-    private int setX(int x1, int x2) {
-        if (x2 < x1) {
-            return x2;
+    private static int selectMin(int a, int b) {
+        if (a < b) {
+            return a;
         }
-        return x1;
-    }
-
-    private int setY(int y1, int y2) {
-        if (y2 < y1) {
-            return y2;
-        }
-        return y1;
+        return b;
     }
 
     /** {@inheritDoc} */
@@ -72,9 +70,10 @@ public class Line extends Shape {
     /** draws the line */
     public void fill(Graphics g) {
         g.setColor(color);
-        if(up){
+        if (up) {
             g.drawLine(x, y+height, x+width, y);
-        }else{
+        }
+        else{
             g.drawLine(x, y, x+width, y+height);
         }
     }
@@ -83,7 +82,7 @@ public class Line extends Shape {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Line && super.equals(o)) {
-            Line line= (Line) o;
+            Line line = (Line) o;
             if(this.up==line.up){
                 return true;
             }

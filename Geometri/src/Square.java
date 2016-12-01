@@ -6,12 +6,16 @@ import java.awt.*;
  */
 public class Square extends Shape {
 
+    /** constructs a Square
+     *
+     * @param x
+     * @param y
+     * @param size
+     * @param c
+     * @throws IllegalPositionException
+     */
     public Square(int x, int y, int size, Color c) throws IllegalPositionException {
-        this.x = x;
-        this.y = y;
-        this.color = c;
-        this.width = size;
-        this.height = size;
+        super(x, y, size, size, c);
         if (checkIllegal()) {
             throw new IllegalPositionException();
         }
@@ -19,14 +23,14 @@ public class Square extends Shape {
         calcCircumference();
     }
 
+    /**
+     * constructs a Square using a GeometricalForm
+     * @param f
+     * @param size
+     * @param c
+     */
     public Square(GeometricalForm f, int size, Color c) {
-        this.x = f.getX();
-        this.y = f.getY();
-        this.color = c;
-        this.width = size;
-        this.height = size;
-        calcArea();
-        calcCircumference();
+        super(f.getX(), f.getY(), size, size, c);
     }
 
     /** {@inheritDoc} */

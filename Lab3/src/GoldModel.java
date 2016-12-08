@@ -14,7 +14,11 @@ import java.util.List;
  * of remaining coins. The game is won when all coins are collected and lost when
  * collector leaves game board.
  */
-public class GoldModel extends GameModel {
+public class GoldModel implements GameModel {
+
+	/** A Matrix containing the state of the gameboard. */
+	private final GameTile[][] gameboardState;
+
 	public enum Directions {
 		EAST(1, 0),
 		WEST(-1, 0),
@@ -87,6 +91,7 @@ public class GoldModel extends GameModel {
 	 */
 	public GoldModel() {
 		Dimension size = getGameboardSize();
+		gameboardState = new GameTile[(int) size.getHeight()][(int) size.getHeight()];
 
 		// Blank out the whole gameboard
 		for (int i = 0; i < size.width; i++) {
@@ -216,6 +221,26 @@ public class GoldModel extends GameModel {
 	private boolean isOutOfBounds(Position pos) {
 		return pos.getX() < 0 || pos.getX() >= getGameboardSize().width
 				|| pos.getY() < 0 || pos.getY() >= getGameboardSize().height;
+	}
+
+	public Dimension getGameboardSize() {
+		return GameUtils.getGameboardSize();
+	}
+
+	public void setGameboardState(final Position pos, final GameTile tile) {
+		GameUtils.setGameboardState(pos, tile, gameboardState);
+	}
+
+	public void setGameboardState(final int x, final int y, final GameTile tile) {
+		GameUtils.setGameboardState(x, y, tile, gameboardState);
+	}
+
+	public GameTile getGameboardState(final Position pos) {
+		return GameUtils.getGameboardState(pos, gameboardState);
+	}
+
+	public GameTile getGameboardState(final int x, final int y) {
+		return GameUtils.getGameboardState(x, y, gameboardState);
 	}
 
 }

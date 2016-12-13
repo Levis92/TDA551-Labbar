@@ -18,7 +18,8 @@ public class BlankTile implements GameTile {
      *            size of this object in pixels.
      */
     public void draw(Graphics g, int x, int y, Dimension d) {
-        // The default GameTile is transparent,
+
+        // The default BlankTile is transparent,
         // therefore no drawing is performed.
     }
 

@@ -11,9 +11,6 @@ import java.awt.event.KeyEvent;
  */
 public class ReversiModel implements GameModel {
 
-	/** A Matrix containing the state of the gameboard. */
-	private final GameTile[][] gameboardState;
-
 	public enum Direction {
 			EAST(1, 0),
 			SOUTHEAST(1, 1),
@@ -91,7 +88,6 @@ public class ReversiModel implements GameModel {
 		this.width = Constants.getGameSize().width;
 		this.height = Constants.getGameSize().height;
 		this.board = new PieceColor[this.width][this.height];
-		this.gameboardState = new GameTile[height][width];
 
 		// Blank out the whole gameboard...
 		for (int i = 0; i < this.width; i++) {
@@ -370,20 +366,8 @@ public class ReversiModel implements GameModel {
 		setGameboardState(this.cursorPos, cursoredTile);
 	}
 
-	public Dimension getGameboardSize() {
-		return GameUtils.getGameboardSize();
-	}
-
-	public void setGameboardState(final Position pos, final GameTile tile) {
-		GameUtils.setGameboardState(pos, tile, gameboardState);
-	}
-
 	public GameTile getGameboardState(final Position pos) {
 		return GameUtils.getGameboardState(pos, gameboardState);
-	}
-
-	public void setGameboardState(final int x, final int y, final GameTile tile) {
-		GameUtils.setGameboardState(x, y, tile, gameboardState);
 	}
 
 	public GameTile getGameboardState(final int x, final int y) {

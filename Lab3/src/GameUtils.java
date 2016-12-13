@@ -34,14 +34,6 @@ public class GameUtils {
         gameboardState[x][y] = tile;
     }
 
-    public static GameTile getGameboardState(final Position pos, final GameTile[][] gameboardState) {
-        return getGameboardState(pos.getX(), pos.getY(), gameboardState);
-    }
-
-    public static GameTile getGameboardState(final int x, final int y, final GameTile[][] gameboardState) {
-        return gameboardState[x][y];
-    }
-
     public static Dimension getGameboardSize() {
         return Constants.getGameSize();
     }

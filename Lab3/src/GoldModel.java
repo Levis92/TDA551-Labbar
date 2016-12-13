@@ -231,7 +231,7 @@ public class GoldModel implements GameModel {
 	}
 
 	public GameTile getGameboardState(final int x, final int y) {
-		return getGameboardState(x, y);
+		return gameboardState[x][y];
 	}
 
 }

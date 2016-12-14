@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent;
  */
 public class ReversiModel implements GameModel {
 
+    private final PropertyChangeSupport observable;
+
 	public enum Direction {
 			EAST(1, 0),
 			SOUTHEAST(1, 1),
@@ -88,6 +90,7 @@ public class ReversiModel implements GameModel {
 		this.width = Constants.getGameSize().width;
 		this.height = Constants.getGameSize().height;
 		this.board = new PieceColor[this.width][this.height];
+        observable = new PropertyChangeSupport();
 
 		// Blank out the whole gameboard...
 		for (int i = 0; i < this.width; i++) {
@@ -324,6 +327,7 @@ public class ReversiModel implements GameModel {
 		} else {
 			throw new GameOverException(this.blackScore - this.whiteScore);
 		}
+        observable.notifyObservers(this);
 	}
 
 	private GameTile updateCursor(GameTile tile) {
@@ -360,5 +364,13 @@ public class ReversiModel implements GameModel {
 			return tile;
 		}
 	}
+
+    public void addObserver(PropertyChangeListener observer) {
+        observable.addObserver(observer);
+    }
+
+    public void removeObserver(PropertyChangeListener observer) {
+        observable.removeObserver(observer);
+    }
 
 }

@@ -19,6 +19,8 @@ public class GoldModel implements GameModel {
 	/** A Matrix containing the state of the gameboard. */
 	private final GameTile[][] gameboardState;
 
+    private final PropertyChangeSupport observable;
+
 	public enum Directions {
 		EAST(1, 0),
 		WEST(-1, 0),
@@ -92,6 +94,7 @@ public class GoldModel implements GameModel {
 	public GoldModel() {
 		Dimension size = getGameboardSize();
 		gameboardState = new GameTile[(int) size.getHeight()][(int) size.getHeight()];
+        observable = new PropertyChangeSupport();
 
 		// Blank out the whole gameboard
 		for (int i = 0; i < size.width; i++) {
@@ -210,6 +213,7 @@ public class GoldModel implements GameModel {
 		// Add a new coin (simulating moving one coin)
 		addCoin();
 
+        observable.notifyObservers(this);
 	}
 
 	/**
@@ -233,5 +237,13 @@ public class GoldModel implements GameModel {
 	public GameTile getGameboardState(final int x, final int y) {
 		return gameboardState[x][y];
 	}
+
+    public void addObserver(PropertyChangeListener observer) {
+        observable.addObserver(observer);
+    }
+
+    public void removeObserver(PropertyChangeListener observer) {
+        observable.removeObserver(observer);
+    }
 
 }

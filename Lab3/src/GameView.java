@@ -10,7 +10,7 @@ import javax.swing.JComponent;
  * A view Component suitable for inclusion in an AWT Frame. Paints itself by
  * consulting its model.
  */
-public class GameView extends JComponent {
+public class GameView extends JComponent implements PropertyChangeListener {
 
 	/** Size of game model */
 	private final Dimension modelSize;
@@ -53,7 +53,13 @@ public class GameView extends JComponent {
 	 * Updates the view with a new model.
 	 */
 	public void setModel(final GameModel model) {
+		if (this.model != null) {
+			this.model.removeObserver(this);
+		}
 		this.model = model;
+		if (this.model != null) {
+			this.model.addObserver(this);
+		}
 		repaint();
 	}
 
@@ -76,6 +82,10 @@ public class GameView extends JComponent {
 
 		// Draw the contents of the offscreen buffer to screen.
 		g.drawImage(this.offscreenImage, 0, 0, this);
+	}
+
+	public void update() {
+		repaint();
 	}
 
 	/**

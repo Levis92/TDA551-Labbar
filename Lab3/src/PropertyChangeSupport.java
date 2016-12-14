@@ -17,7 +17,7 @@ public class PropertyChangeSupport implements IObservable {
 
     public void notifyObservers(GameModel model) {
         for (int i = 0; i < list.size(); i++) {
-
+            list.get(i).update();
         }
     }
 

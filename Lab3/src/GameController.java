@@ -99,9 +99,6 @@ public class GameController implements Runnable {
 		// Start listening for key events
 		this.view.addKeyListener(this.keyListener);
 
-		// Tell the view what to paint...
-		this.view.setModel(gameModel);
-
 		// Actually start the game
 		this.gameModel = gameModel;
 		this.isRunning = true;
@@ -118,9 +115,6 @@ public class GameController implements Runnable {
 		// Setting isRunning to false will
 		// make the thread stop (see run())
 		this.isRunning = false;
-
-		// Unset the game model...
-		this.view.setModel(null);
 
 		// Stop listening for events
 		this.view.removeKeyListener(this.keyListener);

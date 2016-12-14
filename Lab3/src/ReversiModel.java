@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent;
  */
 public class ReversiModel implements GameModel {
 
+	private final PropertyChangeSupport observable;
+
 	public enum Direction {
 			EAST(1, 0),
 			SOUTHEAST(1, 1),
@@ -88,6 +90,7 @@ public class ReversiModel implements GameModel {
 		this.width = Constants.getGameSize().width;
 		this.height = Constants.getGameSize().height;
 		this.board = new PieceColor[this.width][this.height];
+		observable = new PropertyChangeSupport();
 
 		// Blank out the whole gameboard...
 		for (int i = 0; i < this.width; i++) {
@@ -324,9 +327,10 @@ public class ReversiModel implements GameModel {
 		} else {
 			throw new GameOverException(this.blackScore - this.whiteScore);
 		}
+		observable.notifyObservers(this);
 	}
 
-	private GameTile updateCursor(GameTile tile) {
+	private GameTile getCursor(GameTile tile) {
 		GameTile compTile;
 		if (canTurn(this.turn, this.cursorPos)) {
 			if (this.turn == Turn.BLACK) {
@@ -340,11 +344,7 @@ public class ReversiModel implements GameModel {
 		return compTile;
 	}
 
-	public GameTile getGameboardState(final Position pos) {
-		return getGameboardState(pos.getX(), pos.getY());
-	}
-
-	public GameTile getGameboardState(final int x, final int y) {
+	public GameTile getTile(final int x, final int y) {
 		GameTile tile = blankTile;
 		if (board[x][y] == PieceColor.BLACK) {
 			tile = blackGridTile;
@@ -353,12 +353,28 @@ public class ReversiModel implements GameModel {
 			tile = whiteGridTile;
 		}
 		if (cursorPos.getX() == x && cursorPos.getY() == y) {
-			return updateCursor(tile);
+			return getCursor(tile);
 
 		}
 		else {
 			return tile;
 		}
+	}
+
+	public GameTile getGameboardState(final Position pos) {
+		return getGameboardState(pos.getX(), pos.getY());
+	}
+
+	public GameTile getGameboardState(final int x, final int y) {
+		return getTile(x, y);
+	}
+
+	public void addObserver(PropertyChangeListener observer) {
+		observable.addObserver(observer);
+	}
+
+	public void removeObserver(PropertyChangeListener observer) {
+		observable.removeObserver(observer);
 	}
 
 }

@@ -10,7 +10,7 @@ import javax.swing.JComponent;
  * A view Component suitable for inclusion in an AWT Frame. Paints itself by
  * consulting its model.
  */
-public class GameView extends JComponent {
+public class GameView extends JComponent implements PropertyChangeListener {
 
 	/** Size of game model */
 	private final Dimension modelSize;
@@ -19,7 +19,7 @@ public class GameView extends JComponent {
 	private final Dimension tileSize;
 
 	/** The game model which is drawn */
-	private GameModel model;
+	private GameTile[][] board;
 
 	/** The offscreen buffer */
 	private Graphics offscreenGraphics;
@@ -43,18 +43,11 @@ public class GameView extends JComponent {
 	public GameView(final int tileSide) {
 		this.tileSize = new Dimension(tileSide, tileSide);
 		this.modelSize = Constants.getGameSize();
+		this.board = null;
 		Dimension preferredSize =
 				new Dimension(this.modelSize.width * tileSide,
 						this.modelSize.height * tileSide);
 		setPreferredSize(preferredSize);
-	}
-
-	/**
-	 * Updates the view with a new model.
-	 */
-	public void setModel(final GameModel model) {
-		this.model = model;
-		repaint();
 	}
 
 	/**
@@ -78,8 +71,18 @@ public class GameView extends JComponent {
 		g.drawImage(this.offscreenImage, 0, 0, this);
 	}
 
+	public void update(final GameModel model) {
+		this.board = new GameTile[modelSize.width][modelSize.height];
+		for (int i = 0; i < this.modelSize.width; i++) {
+			for (int j = 0; j < this.modelSize.height; j++) {
+				this.board[i][j] = model.getGameboardState(i, j);
+			}
+		}
+		repaint();
+	}
+
 	/**
-	 * Consults the model to paint the game matrix. If model is null, draws a
+	 * Consults the board to paint the game matrix. If board is null, draws a
 	 * default text.
 	 */
 	@Override
@@ -89,12 +92,11 @@ public class GameView extends JComponent {
 		g.setColor(this.getBackground());
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		if (this.model != null) {
-
+		if (this.board != null) {
 			// Draw all tiles by going over them x-wise and y-wise.
 			for (int i = 0; i < this.modelSize.width; i++) {
 				for (int j = 0; j < this.modelSize.height; j++) {
-					GameTile tile = this.model.getGameboardState(i, j);
+					GameTile tile = this.board[i][j];
 					tile.draw(g, i * this.tileSize.width, j
 							* this.tileSize.height,
 							this.tileSize);
@@ -106,5 +108,9 @@ public class GameView extends JComponent {
 			final char[] message = "No model chosen.".toCharArray(); 
 			g.drawChars(message, 0, message.length, 50, 50);
 		}
+	}
+
+	public void clearBoard() {
+		this.board = null;
 	}
 }

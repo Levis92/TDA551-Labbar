@@ -6,7 +6,7 @@ import java.awt.Dimension;
  * Constructors of subclasses should initiate matrix elements and additional,
  * game-dependent fields.
  */
-public interface GameModel {
+public interface GameModel extends IObservable {
 
 	/**
 	 * Returns the GameTile in logical position (x,y) of the gameboard.

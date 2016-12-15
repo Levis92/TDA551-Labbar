@@ -74,8 +74,6 @@ public class GameController implements Runnable {
                 // or 0 if no new keypress since last update.
                 this.gameModel.gameUpdate(key);
 
-                this.gameModel.notifyObservers();
-
             } catch (GameOverException e) {
                 // we got a game over signal, time to exit...
                 // The current implementation ignores the game score
@@ -167,8 +165,6 @@ public class GameController implements Runnable {
                     // Tell model to update, send next key press.
                     // or 0 if no new keypress since last update.
                     this.gameModel.gameUpdate(nextKeyPress());
-
-                    this.gameModel.notifyObservers();
 
                     Thread.sleep(this.updateInterval);
                 } catch (GameOverException e) {

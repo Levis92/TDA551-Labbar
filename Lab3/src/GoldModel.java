@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,9 @@ import java.util.List;
  * of remaining coins. The game is won when all coins are collected and lost when
  * collector leaves game board.
  */
+import java.beans.PropertyChangeSupport;
+import java.beans.PropertyChangeListener;
+
 public class GoldModel implements GameModel {
 
 	/** A Matrix containing the state of the gameboard. */
@@ -96,7 +100,7 @@ public class GoldModel implements GameModel {
 	public GoldModel() {
 		Dimension size = getGameboardSize();
 		gameboardState = new GameTile[(int) size.getHeight()][(int) size.getHeight()];
-        observable = new PropertyChangeSupport();
+        observable = new PropertyChangeSupport(this);
 
 		// Blank out the whole gameboard
 		for (int i = 0; i < size.width; i++) {
@@ -215,6 +219,8 @@ public class GoldModel implements GameModel {
 		// Add a new coin (simulating moving one coin)
 		addCoin();
 
+		notifyObservers();
+
 	}
 
 	/**
@@ -244,15 +250,14 @@ public class GoldModel implements GameModel {
 	}
 
     public void addObserver(PropertyChangeListener observer) {
-        observable.addObserver(observer);
+        observable.addPropertyChangeListener(observer);
     }
 
     public void removeObserver(PropertyChangeListener observer) {
-        observable.removeObserver(observer);
+        observable.removePropertyChangeListener(observer);
     }
 
-    public void notifyObservers() {
-		observable.notifyObservers();
+	public void notifyObservers() {
+		observable.firePropertyChange(new PropertyChangeEvent(this, "Game", 1, 0));
 	}
-
 }

@@ -1,6 +1,9 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * A somewhat defective implementation of the game Reversi. The purpose
@@ -92,7 +95,7 @@ public class ReversiModel implements GameModel {
 		this.width = Constants.getGameSize().width;
 		this.height = Constants.getGameSize().height;
 		this.board = new PieceColor[this.width][this.height];
-        observable = new PropertyChangeSupport();
+        observable = new PropertyChangeSupport(this);
 
 		// Blank out the whole gameboard...
 		for (int i = 0; i < this.width; i++) {
@@ -329,6 +332,7 @@ public class ReversiModel implements GameModel {
 		} else {
 			throw new GameOverException(this.blackScore - this.whiteScore);
 		}
+		notifyObservers();
 	}
 
 	private GameTile updateCursor(GameTile tile) {
@@ -371,15 +375,15 @@ public class ReversiModel implements GameModel {
 	}
 
     public void addObserver(PropertyChangeListener observer) {
-        observable.addObserver(observer);
+        observable.addPropertyChangeListener(observer);
     }
 
     public void removeObserver(PropertyChangeListener observer) {
-        observable.removeObserver(observer);
+        observable.removePropertyChangeListener(observer);
     }
 
-	public void notifyObservers() {
-		observable.notifyObservers();
+    public void notifyObservers() {
+    	observable.firePropertyChange(new PropertyChangeEvent(this, "Game", 1, 0));
 	}
 
 }

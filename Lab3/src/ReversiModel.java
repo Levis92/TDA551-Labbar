@@ -393,7 +393,7 @@ public class ReversiModel implements GameModel {
 	 * {@inheritDoc}
 	 */
     public void addObserver(PropertyChangeListener observer) {
-        observable.addPropertyChangeListener(observer);
+		observable.addPropertyChangeListener(observer);
     }
 
 	/**
@@ -407,7 +407,7 @@ public class ReversiModel implements GameModel {
 	 * sends event to all observers in observable
 	 */
     public void notifyObservers() {
-    	observable.firePropertyChange(new PropertyChangeEvent(this, null, null, null));
+		observable.firePropertyChange("game", true, false);
 	}
 
 }

@@ -12,12 +12,11 @@ public class ReversiScoreView implements PropertyChangeListener {
      * @param evt
      */
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("PropertyChange i ReversiScoreView");
         if (evt.getSource().getClass() == ReversiModel.class) {
             ReversiModel model = (ReversiModel) evt.getSource();
             System.out.println("Black has " + model.getBlackScore() + " points.");
             System.out.println("White has " + model.getWhiteScore() + " points.");
-            System.out.println("Black has " + model.getBlackScore() + " points.");
+            System.out.println("It is " + model.getTurnColor() + "'s turn.");
         }
     }
 

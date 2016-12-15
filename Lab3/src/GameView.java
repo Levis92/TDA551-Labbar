@@ -92,7 +92,6 @@ public class GameView extends JComponent implements PropertyChangeListener {
 	 * @param evt
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
-		System.out.println("PropertyChange i GameView");
 		repaint();
 	}
 

@@ -7,4 +7,6 @@ public interface IObservable {
 
     void removeObserver(PropertyChangeListener observer);
 
+    void notifyObservers();
+
 }

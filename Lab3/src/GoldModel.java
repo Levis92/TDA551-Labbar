@@ -47,6 +47,8 @@ public class GoldModel implements GameModel {
 
 	private static final int COIN_START_AMOUNT = 20;
 
+	private static final int UPDATE_SPEED = 100;
+
 	/*
 	 * The following GameTile objects are used only
 	 * to describe how to paint the specified item.
@@ -213,7 +215,6 @@ public class GoldModel implements GameModel {
 		// Add a new coin (simulating moving one coin)
 		addCoin();
 
-        observable.notifyObservers(this);
 	}
 
 	/**
@@ -238,6 +239,10 @@ public class GoldModel implements GameModel {
 		return gameboardState[x][y];
 	}
 
+	public int getUpdateSpeed() {
+		return UPDATE_SPEED;
+	}
+
     public void addObserver(PropertyChangeListener observer) {
         observable.addObserver(observer);
     }
@@ -245,5 +250,9 @@ public class GoldModel implements GameModel {
     public void removeObserver(PropertyChangeListener observer) {
         observable.removeObserver(observer);
     }
+
+    public void notifyObservers() {
+		observable.notifyObservers();
+	}
 
 }

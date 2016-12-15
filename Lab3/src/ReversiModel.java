@@ -86,6 +86,8 @@ public class ReversiModel implements GameModel {
 	private final int height;
 	private boolean gameOver;
 
+	private static final int UPDATE_SPEED = -1;
+
 	public ReversiModel() {
 		this.width = Constants.getGameSize().width;
 		this.height = Constants.getGameSize().height;
@@ -327,7 +329,6 @@ public class ReversiModel implements GameModel {
 		} else {
 			throw new GameOverException(this.blackScore - this.whiteScore);
 		}
-        observable.notifyObservers(this);
 	}
 
 	private GameTile updateCursor(GameTile tile) {
@@ -365,6 +366,10 @@ public class ReversiModel implements GameModel {
 		}
 	}
 
+	public int getUpdateSpeed() {
+		return UPDATE_SPEED;
+	}
+
     public void addObserver(PropertyChangeListener observer) {
         observable.addObserver(observer);
     }
@@ -372,5 +377,9 @@ public class ReversiModel implements GameModel {
     public void removeObserver(PropertyChangeListener observer) {
         observable.removeObserver(observer);
     }
+
+	public void notifyObservers() {
+		observable.notifyObservers();
+	}
 
 }

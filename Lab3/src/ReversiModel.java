@@ -335,6 +335,11 @@ public class ReversiModel implements GameModel {
 		notifyObservers();
 	}
 
+	/**
+	 * returns the tile the cursor is on
+	 * @param tile
+	 * @return
+	 */
 	private GameTile updateCursor(GameTile tile) {
 		GameTile compTile;
 		if (canTurn(this.turn, this.cursorPos)) {
@@ -349,10 +354,16 @@ public class ReversiModel implements GameModel {
 		return compTile;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public GameTile getGameboardState(final Position pos) {
 		return getGameboardState(pos.getX(), pos.getY());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public GameTile getGameboardState(final int x, final int y) {
 		GameTile tile = blankTile;
 		if (board[x][y] == PieceColor.BLACK) {
@@ -370,20 +381,33 @@ public class ReversiModel implements GameModel {
 		}
 	}
 
+	/**
+	 * returns the update speed of the game
+	 * @return
+	 */
 	public int getUpdateSpeed() {
 		return UPDATE_SPEED;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
     public void addObserver(PropertyChangeListener observer) {
         observable.addPropertyChangeListener(observer);
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
     public void removeObserver(PropertyChangeListener observer) {
         observable.removePropertyChangeListener(observer);
     }
 
+	/**
+	 * sends event to all observers in observable
+	 */
     public void notifyObservers() {
-    	observable.firePropertyChange(new PropertyChangeEvent(this, "Game", 1, 0));
+    	observable.firePropertyChange(new PropertyChangeEvent(this, null, null, null));
 	}
 
 }

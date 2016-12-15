@@ -87,6 +87,10 @@ public class GameView extends JComponent implements PropertyChangeListener {
 		g.drawImage(this.offscreenImage, 0, 0, this);
 	}
 
+	/**
+	 * used to tell view that game has been updated
+	 * @param evt
+	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		System.out.println("PropertyChange i GameView");
 		repaint();

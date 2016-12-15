@@ -7,6 +7,10 @@ import java.beans.PropertyChangeListener;
 
 public class ReversiScoreView implements PropertyChangeListener {
 
+    /**
+     * used to tell view that it should update
+     * @param evt
+     */
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("PropertyChange i ReversiScoreView");
         if (evt.getSource().getClass() == ReversiModel.class) {

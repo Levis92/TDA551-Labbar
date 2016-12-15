@@ -16,6 +16,16 @@ public interface GameModel extends IObservable {
 	 */
 	public GameTile getGameboardState(final Position pos);
 
+	/**
+	 * Returns the GameTile in logical position (x,y) of the gameboard.
+	 *
+	 * @param x
+	 * 			x coordinate of tile
+	 * @param y
+	 * 			y coordinate of tile
+	 *
+	 *            The position in the gameboard matrix.
+	 */
 	public GameTile getGameboardState(final int x, final int y);
 
 

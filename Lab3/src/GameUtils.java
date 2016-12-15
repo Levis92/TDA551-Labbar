@@ -34,6 +34,10 @@ public class GameUtils {
         gameboardState[x][y] = tile;
     }
 
+    /**
+     * returns the size of the gameboard
+     * @return
+     */
     public static Dimension getGameboardSize() {
         return Constants.getGameSize();
     }
